@@ -1,22 +1,28 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
+const dotenv = require("dotenv");
+
 const logger = require("./middleware/logger");
-const userRouter = require("./routes/users");
-const App = express();
+const AuthRouter = require("./routes/auth");
+const UserRouter = require("./routes/user");
 
-App.use(logger);
-App.use(express.json());
-App.use(express.urlencoded({ extended: false }));
+dotenv.config();
+const startserver = async () => {
+  const App = express();
 
-App.get("/", (req, res) => res.send("<h1>Animatrix-Server</h1>"));
-App.use("/users", userRouter);
+  App.use(logger);
+  App.use(express.json());
+  App.use(express.urlencoded({ extended: false }));
 
-mongoose
-  .connect("mongodb+srv://boraalpsesli:boraalp2@animatrix-qy0xl.mongodb.net/test?retryWrites=true&w=majority", {
+  App.get("/", (req, res) => res.send("<h1>Animatrix-Server</h1>"));
+  App.use("/auth", AuthRouter);
+  App.use("/user", UserRouter);
+  await mongoose.connect(process.env.DB_CONNECT, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-  })
-  .then(() => console.log("dbconnected"))
-  .catch(err => console.log("dbcouldnotconnect"));
+  });
 
-App.listen(5000, () => console.log("Server started on  port 50000"));
+  App.listen(5000, () => console.log("Server started on  port 50000"));
+};
+startserver();
