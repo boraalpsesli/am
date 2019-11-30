@@ -9,7 +9,7 @@ const tokenVerifier = async (req, res, next) => {
   if (!accessToken) return res.status(401).send("Wrong format! should be a 'Baerer Token' mate!!!");
 
   try {
-    const { userId } = await jwt.verify(accessToken, process.env.JWT_SECRET);
+    const { userId } = jwt.verify(accessToken, process.env.JWT_SECRET);
 
     const user = await UserModel.findById(userId);
     req.user = user;

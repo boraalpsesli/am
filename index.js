@@ -1,5 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
+const cors = require('cors');
 
 const dotenv = require("dotenv");
 
@@ -11,6 +12,7 @@ dotenv.config();
 const startserver = async () => {
   const App = express();
 
+  App.use(cors());
   App.use(logger);
   App.use(express.json());
   App.use(express.urlencoded({ extended: false }));

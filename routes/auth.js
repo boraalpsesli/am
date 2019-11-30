@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
 
     const user = new UserModel({
       email,
-      password: hashedPass,
+      password: hashPass,
       firstname,
       lastname
     });
