@@ -6,10 +6,14 @@ This README describe Animatrix.
 Usage
 -----
 
+Start database
+
+    docker run -p 27017:27017 mongo
+
 Install dependencies
 
-    npm install
+    yarn install
 
 Start webserver
 
-    npm start
+    DB_CONNECT='mongodb://localhost:27017/animatrix' yarn run start
